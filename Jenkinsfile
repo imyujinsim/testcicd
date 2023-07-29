@@ -7,7 +7,7 @@ pipeline {
         script {
           try {
             git branch: 'main'
-            credentialsId: 'github'
+            credentialsId: 'git'
             url: 'https://github.com/imyujinsim/testcicd'
 
             sh "ls -lat"
