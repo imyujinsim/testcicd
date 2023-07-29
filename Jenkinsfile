@@ -13,7 +13,7 @@ pipeline {
             sh "ls -lat"
             print('github is succesfully connected!')
           }
-          catch {
+          catch(error) {
             print('error:')
           }
         }
