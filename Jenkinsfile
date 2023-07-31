@@ -22,7 +22,7 @@ pipeline {
             cd ${env.JOB_NAME}
             """
             git branch: 'main'
-	    credentialsId: 'imyujinsim'
+	    credentialsId: 'jenkins'
             url: 'https://github.com/imyujinsim/testcicd'
 
             env.cloneResult=true
