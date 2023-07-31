@@ -29,7 +29,7 @@ pipeline {
             print('github is succesfully connected!')
           }
           catch (error) {
-            sh "rm -rf /var/lb/jenkins/*"
+            sh "rm -rf /var/lib/jenkins/workspace/*"
             print('error')
             env.cloneResult=false
             currentBuild.result = 'FAILURE'
@@ -54,7 +54,7 @@ pipeline {
             env.mavenBuildResult=true
           } catch(error) {
             print('error')
-            sh "rm -rf /var/lb/jenkins/*"
+            sh "rm -rf /var/lib/jenkins/workspace/*"
             env.cloneResult=false
             currentBuild.result = 'FAILURE'
           }
@@ -89,7 +89,7 @@ pipeline {
           catch(error) {
             print(error)
               echo 'Remove Deploy Files'
-              sh "rm -rf /var/lb/jenkins/*"
+              sh "rm -rf /var/lib/jenkins/workspace/*"
               env.dockerBuildResult=false
               currentBuild.result = 'FAILURE'
           }
