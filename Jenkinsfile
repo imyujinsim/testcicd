@@ -22,10 +22,9 @@ pipeline {
             cd ${env.JOB_NAME}
             """
             git branch: 'main'
-            credentialsId: 'github'
+            credentialsId: 'imyujinsim'
             url: 'https://github.com/imyujinsim/testcicd'
 
-            sh "ls -lat"
             env.cloneResult=true
             print('github is succesfully connected!')
           }
