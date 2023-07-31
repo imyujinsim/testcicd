@@ -22,7 +22,7 @@ pipeline {
             cd ${env.JOB_NAME}
             """
             git branch: 'main'
-	    credentialsId: 'jenkins'
+	    credentialsId: 'git'
             url: 'https://github.com/imyujinsim/testcicd'
 
 	    sh "ls -la"
