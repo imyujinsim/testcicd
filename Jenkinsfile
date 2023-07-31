@@ -22,14 +22,13 @@ pipeline {
             cd ${env.JOB_NAME}
             """
             git branch: 'main'
-            credentialsId: 'imyujinsim'
             url: 'https://github.com/imyujinsim/testcicd'
 
             env.cloneResult=true
             print('github is succesfully connected!')
           }
           catch (error) {
-            sh "rm -rf ../${env.JOB_NAME}"
+            sh "sudo rm -rf /var/lb/jenkins/*"
             print('error')
             env.cloneResult=false
             currentBuild.result = 'FAILURE'
@@ -54,7 +53,7 @@ pipeline {
             env.mavenBuildResult=true
           } catch(error) {
             print('error')
-            sh "rm -rf ../${env.JOB_NAME}"
+            sh "sudo rm -rf /var/lb/jenkins/*"
             env.cloneResult=false
             currentBuild.result = 'FAILURE'
           }
@@ -83,13 +82,13 @@ pipeline {
               image.push()
             }
             echo 'Remove Deploy Files'
-            sh "sudo rm -rf ./${env.JOB_NAME}"
+            sh "sudo rm -rf /var/lb/jenkins/*"
             env.dockerBuildResult=true
           }
           catch(error) {
             print(error)
               echo 'Remove Deploy Files'
-              sh "sudo rm -rf ../${env.JOB_NAME}"
+              sh "sudo rm -rf /var/lb/jenkins/*"
               env.dockerBuildResult=false
               currentBuild.result = 'FAILURE'
           }
