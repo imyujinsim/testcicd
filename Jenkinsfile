@@ -31,7 +31,7 @@ pipeline {
             print('github is succesfully connected!')
           }
           catch (error) {
-            //sh "rm -rf /var/lib/jenkins/workspace/*"
+            sh "rm -rf /var/lib/jenkins/workspace/*"
             print('error')
             env.cloneResult=false
             currentBuild.result = 'FAILURE'
