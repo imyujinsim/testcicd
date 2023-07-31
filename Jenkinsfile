@@ -25,6 +25,8 @@ pipeline {
 	    credentialsId: 'jenkins'
             url: 'https://github.com/imyujinsim/testcicd'
 
+	    sh "ls -la"
+
             env.cloneResult=true
             print('github is succesfully connected!')
           }
