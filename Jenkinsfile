@@ -61,11 +61,10 @@ pipeline {
           try {
             sh """
 	    #!/bin/bash
-            cat <<EndOfFile > Dockerfile
+            echo > Dockerfile
             FROM openjdk:11-jre-slim
             ADD ./target/${ECR_IMAGE}.jar /home/${ECR_IMAGE}.jar
             CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/${ECR_IMAGE}.jar"]
-            EndOfFile
             """
             docker.withRegistry("https://${ECR_PATH}") {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
