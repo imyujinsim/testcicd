@@ -1,3 +1,4 @@
 FROM openjdk:11-jre-slim
 ADD ./target/.jar /home/.jar
 CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/.jar"]
+

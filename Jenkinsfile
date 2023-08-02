@@ -68,7 +68,7 @@ pipeline {
             """
 	    sh "mv test Dockerfile"
 
-            docker.withRegistry("https://${ECR_PATH}") {
+            docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:aws_credentials") {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
               image.push()
             }
