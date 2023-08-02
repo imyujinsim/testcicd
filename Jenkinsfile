@@ -6,12 +6,14 @@ pipeline {
   }
 
   environment {
-    registryCredential = 'aws_credential'
+    registryCredential = 'aws_credentials'
     ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/testcicd'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
     ACCOUNT_ID='005040503934'
   }
+
+  w
 
   stages {
     stage('Git Clone from gitSCM') {
@@ -68,7 +70,7 @@ pipeline {
             """
 	    sh "mv test Dockerfile"
 
-            docker.withRegistry("https://${ECR_PATH}") {
+            docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:" + registryCredential) {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
               image.push()
             }
