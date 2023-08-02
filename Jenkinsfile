@@ -60,6 +60,7 @@ pipeline {
         script {
           try {
             sh """
+	    #!/bin/bash
             cat <<EndOfFile > Dockerfile
             FROM openjdk:11-jre-slim
             ADD ./target/${ECR_IMAGE}.jar /home/${ECR_IMAGE}.jar
