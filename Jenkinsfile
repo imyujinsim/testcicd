@@ -13,8 +13,6 @@ pipeline {
     ACCOUNT_ID='005040503934'
   }
 
-  w
-
   stages {
     stage('Git Clone from gitSCM') {
       steps {
