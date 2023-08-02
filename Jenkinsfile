@@ -66,7 +66,7 @@ pipeline {
             CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/${ECR_IMAGE}.jar"]
             EOF
             """
-            docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:${AWS_CREDENTIAL_NAME}") {
+            docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:aws_credential") {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
               image.push()
             }
