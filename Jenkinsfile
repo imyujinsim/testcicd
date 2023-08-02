@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    AWS_CREDENTIAL_NAME = 'aws'
+    AWS_CREDENTIAL_NAME = 'aws_credential'
     ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
