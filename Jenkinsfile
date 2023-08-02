@@ -27,25 +27,17 @@ pipeline {
 
 	    sh "ls -la"
 
-            env.cloneResult=true
             print('github is succesfully connected!')
           }
           catch (error) {
             sh "rm -rf /var/lib/jenkins/workspace/*"
             print('error')
-            env.cloneResult=false
-            currentBuild.result = 'FAILURE'
           }
         }
       }
     }
 
     stage('Build JAR with Maven') {
-      when {
-        expression {
-          return env.cloneResult ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/
-        }
-      }
       steps {
         script {
           try {
@@ -57,19 +49,12 @@ pipeline {
           } catch(error) {
             print('error')
             sh "rm -rf /var/lib/jenkins/workspace/*"
-            env.cloneResult=false
-            currentBuild.result = 'FAILURE'
           }
         }
       }
     }
 
     stage('Docker Build and Push to ECR') {
-      when {
-        expression {
-          return env.mavenBuildResult ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/
-        }
-      }
       steps {
         script {
           try {
@@ -92,8 +77,6 @@ pipeline {
             print(error)
               echo 'Remove Deploy Files'
               sh "rm -rf /var/lib/jenkins/workspace/*"
-              env.dockerBuildResult=false
-              currentBuild.result = 'FAILURE'
           }
         }
       }
