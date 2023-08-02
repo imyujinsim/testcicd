@@ -21,9 +21,9 @@ pipeline {
             mkdir ${env.JOB_NAME}
             cd ${env.JOB_NAME}
             """
-            git branch: 'main'
-	    credentialsId: 'github'
-            url: 'https://github.com/imyujinsim/testcicd'
+            git branch: 'main',
+	    credentialsId: 'github',
+            url: 'https://github.com/imyujinsim/testcicd.git'
 
 	    sh "ls -la"
 
