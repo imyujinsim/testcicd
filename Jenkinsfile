@@ -84,7 +84,7 @@ pipeline {
 
     stage('Push Yaml'){
       steps {
-        git url: 'https://github.com/imyujinsim/testcicd.git', branch: "main", credentialsId: 'github'
+        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'github'
         sh """
         #!/bin/bash
         cat>deploy.yaml<<-EOF
