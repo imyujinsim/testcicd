@@ -73,7 +73,7 @@ pipeline {
               image.push()
             }
             echo 'Remove Deploy Files'
-            sh "rm -rf /var/lb/jenkins/*"
+            sh "rm -rf /var/lib/jenkins/workspace/*"
             env.dockerBuildResult=true
           }
           catch(error) {
