@@ -105,7 +105,7 @@ pipeline {
               containers:
               - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/testcid:${env.BUILD_NUMBER}
                 name: petclinic
-        EOF"""
+        """
 
        
         echo 'Remove Deploy Files'
