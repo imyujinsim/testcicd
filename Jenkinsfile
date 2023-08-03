@@ -7,7 +7,7 @@ pipeline {
 
   environment {
     registryCredential = 'aws_credentials'
-    ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
+    ECR_PATH = '005040503934.ecr.ap-northeast-2.amazonaws.com'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
     ACCOUNT_ID='005040503934'
