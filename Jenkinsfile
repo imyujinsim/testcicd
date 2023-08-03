@@ -87,7 +87,7 @@ pipeline {
         git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'github'
         sh """
         #!/bin/bash
-        cat>deploy.yaml<<-EOF
+        cat > deploy.yaml << EOF
         apiVersion: apps/v1
         kind: Deployment
         metadata:
