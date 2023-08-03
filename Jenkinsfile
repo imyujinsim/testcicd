@@ -23,10 +23,10 @@ pipeline {
             cd ${env.JOB_NAME}
             """
             git branch: 'main',
-	    credentialsId: 'github',
+            credentialsId: 'github',
             url: 'https://github.com/imyujinsim/testcicd.git'
 
-	    sh "ls -la"
+            sh "ls -la"
 
             print('github is succesfully connected!')
           }
@@ -60,13 +60,13 @@ pipeline {
         script {
           try {
             sh """
-	    #!/bin/bash
+            #!/bin/bash
             cat > test << EOF
             FROM openjdk:11-jre-slim
             ADD ./target/${ECR_IMAGE}.jar /home/${ECR_IMAGE}.jar
             CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/${ECR_IMAGE}.jar"]
             """
-	    sh "mv test Dockerfile"
+            sh "mv test Dockerfile"
 
             docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:aws_credentials") {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
@@ -84,5 +84,33 @@ pipeline {
         }
       }
     }
+
+    stage('Push Yaml'){
+      steps {
+        git url: 'https://github.com/imyujinsim/testcicd.git', branch: "main", credentialsId: 'github'
+        sh """
+        #!/bin/bash
+        cat>deploy.yaml<<-EOF
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: tomcat-deployment
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: was
+          template:
+            metadata:
+              labels:
+                app: was
+            spec:
+              containers:
+              - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/testcid:${env.BUILD_NUMBER}
+                name: petclinic
+        EOF"""
+      }
+    }
   }
 }
+
