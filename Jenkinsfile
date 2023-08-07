@@ -106,6 +106,9 @@ pipeline {
               containers:
               - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/${ECR_IMAGE}:${env.BUILD_NUMBER}
                 name: petclinic
+                ports:
+                - name: tcp
+                  containerPort: 80
         """
  
         sh '''
