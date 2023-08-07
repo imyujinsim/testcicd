@@ -73,7 +73,6 @@ pipeline {
               image.push()
             }
 
-            echo 'Remove Deploy Files'
             sh "rm -rf /var/lib/jenkins/workspace/*"
           }
           catch(error) {
