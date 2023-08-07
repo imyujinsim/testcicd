@@ -84,7 +84,7 @@ pipeline {
 
     stage('Push Yaml'){
       steps {
-        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'github'
+        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'githubcd'
         sh """
         #!/bin/bash
         cat > deploy.yaml << EOF
@@ -106,10 +106,6 @@ pipeline {
               - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/testcid:${env.BUILD_NUMBER}
                 name: petclinic
         """
-
-       
-        echo 'Remove Deploy Files'
-        sh "rm -rf /var/lib/jenkins/workspace/*"
       }
     }
   }
