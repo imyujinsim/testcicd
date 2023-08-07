@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    gitCredential = 'github'
+    gitCredential = credentials('github')
     ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
