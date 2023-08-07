@@ -84,7 +84,7 @@ pipeline {
 
     stage('Push Yaml'){
       steps {
-        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'githubcd'
+        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'github'
         sh """
         #!/bin/bash
         cat > deploy.yaml << EOF
@@ -105,7 +105,7 @@ pipeline {
               containers:
               - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/${ECR_IMAGE}:${env.BUILD_NUMBER}
                 name: petclinic
-        """
+        EOF"""
       }
     }
   }
