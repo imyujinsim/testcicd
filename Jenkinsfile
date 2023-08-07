@@ -108,7 +108,7 @@ pipeline {
                 name: petclinic
                 ports:
                 - name: tcp
-                  containerPort: 80
+                  containerPort: 8080
         """
  
         sh '''
