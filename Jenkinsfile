@@ -111,7 +111,7 @@ pipeline {
         sh '''
         git add deploy.yaml
         git commit -m 'yaml for deploy'
-        git push
+        git push https://github.com/imyujinsim/testcicd-cd.git main
         '''
       }
     }
