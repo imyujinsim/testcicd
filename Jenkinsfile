@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    registryCredential = 'aws_credentials'
+    gitCredential = 'github'
     ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
@@ -111,7 +111,7 @@ pipeline {
         sh '''
         git add deploy.yaml
         git commit -m 'yaml for deploy'
-        git push https://github.com/imyujinsim/testcicd-cd.git main
+        git push https://${gitCredential}@github.com/imyujinsim/testcicd-cd.git main
         '''
       }
     }
