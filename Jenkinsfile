@@ -62,7 +62,7 @@ pipeline {
             sh """
             #!/bin/bash
             cat > test << EOF
-            FROM openjdk:11-jre-slim
+            FROM openjdk:17-alpine
             ADD ./target/${ECR_IMAGE}.jar /home/${ECR_IMAGE}.jar
             CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/${ECR_IMAGE}.jar"]
             """
