@@ -72,11 +72,14 @@ pipeline {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
               image.push()
             }
+
+            echo 'Remove Deploy Files'
+            sh "rm -rf /var/lib/jenkins/workspace/*"
           }
           catch(error) {
             print(error)
-              echo 'Remove Deploy Files'
-              sh "rm -rf /var/lib/jenkins/workspace/*"
+            echo 'Remove Deploy Files'
+            sh "rm -rf /var/lib/jenkins/workspace/*"
           }
         }
       }
@@ -110,3 +113,4 @@ pipeline {
     }
   }
 }
+
