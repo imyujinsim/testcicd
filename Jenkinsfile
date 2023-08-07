@@ -72,8 +72,6 @@ pipeline {
               def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
               image.push()
             }
-
-            sh "rm -rf /var/lib/jenkins/workspace/*"
           }
           catch(error) {
             print(error)
@@ -108,6 +106,12 @@ pipeline {
               - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/${ECR_IMAGE}:${env.BUILD_NUMBER}
                 name: petclinic
         """
+      }
+    }
+
+    stage('Finish') {
+      steps { 
+        sh "rm -rf /var/lib/jenkins/workspace/*"
       }
     }
   }
