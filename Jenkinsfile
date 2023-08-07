@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    gitCredential = credentials('github')
+    gitCredential = credentials('githubcd')
     ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
     ECR_IMAGE = 'testcicd'
     REGION = 'ap-northeast-2'
@@ -84,7 +84,7 @@ pipeline {
 
     stage('Push Yaml'){
       steps {
-        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'github'
+        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'githubicd'
         
         sh """
         #!/bin/bash
