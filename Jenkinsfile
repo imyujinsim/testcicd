@@ -52,7 +52,10 @@ pipeline {
             sshagent(credentials: ['ssh-credential']) {
               sh """
               scp -P 22 ./target/${env.JOB_NAME}.jar ec2-user@172.31.58.15:/home/ec2-user/${env.JOB_NAME}.jar
-              ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
+              ssh ec2-user@172.31.58.15 -o StrictHostKeyChecking=no
+
+              mkdir ${env.JOB_NAME}
+              cd ${env.JOB_NAME}
 
               java -jar ${env.JOB_NAME}.jar 
               """
