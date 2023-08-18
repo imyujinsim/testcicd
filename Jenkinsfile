@@ -55,68 +55,22 @@ pipeline {
       }
     }
 
-    stage('Docker Build and Push to ECR') {
-      steps {
-        script {
-          try {
-            sh """
-            #!/bin/bash
-            cat > test << EOF
-            FROM openjdk:17-alpine
-            ADD ./target/${ECR_IMAGE}.jar /home/${ECR_IMAGE}.jar
-            CMD ["nohup", "java", "-jar", "-Dspring.profiles.active='mysql'", "/home/${ECR_IMAGE}.jar"]
-            """
-            sh "mv test Dockerfile"
+    stage('Deploy with ssh') {
+        steps {
+            try {
+                sshagent(credentials: ['ssh-credential']) {
+                    sh '''
+                    scp -P 22 ./target/${ECR_IMAGE}.jar ec2-user@172.31.58.15:/home/ec2-user/${ECR_IMAGE}.jar
+                    ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
 
-            docker.withRegistry("https://${ECR_PATH}", "ecr:ap-northeast-2:aws_credentials") {
-              def image = docker.build("${ECR_PATH}/${ECR_IMAGE}:${env.BUILD_NUMBER}")
-              image.push()
+                    ./mvnw package -Dskip-test             
+                    '''
+                }
+            } catch(error) {
+                print('error')
+                sh "rm -rf /var/lib/jenkins/workspace/*"
             }
-          }
-          catch(error) {
-            print(error)
-            echo 'Remove Deploy Files'
-            sh "rm -rf /var/lib/jenkins/workspace/*"
-          }
         }
-      }
-    }
-
-    stage('Push Yaml'){
-      steps {
-        git url: 'https://github.com/imyujinsim/testcicd-cd.git', branch: "main", credentialsId: 'githubicd'
-        
-        sh """
-        #!/bin/bash
-        cat > deploy.yaml << EOF
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: tomcat-deployment
-        spec:
-          replicas: 2
-          selector:
-            matchLabels:
-              app: was
-          template:
-            metadata:
-              labels:
-                app: was
-            spec:
-              containers:
-              - image: 005040503934.dkr.ecr.ap-northeast-2.amazonaws.com/${ECR_IMAGE}:${env.BUILD_NUMBER}
-                name: petclinic
-                ports:
-                - name: tcp
-                  containerPort: 8080
-        """
- 
-        sh '''
-        git add deploy.yaml
-        git commit -m 'yaml for deploy'
-        git push https://${gitCredential}@github.com/imyujinsim/testcicd-cd.git main
-        '''
-      }
     }
 
     stage('Finish') {
