@@ -61,7 +61,7 @@ pipeline {
               '''
 
               sh """
-              cd workspace
+              cd /home/ec2-user/workspace
 
               java -jar ${env.JOB_NAME}.jar &
               """
