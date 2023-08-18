@@ -51,7 +51,7 @@ pipeline {
           try {
             sshagent(credentials: ['ssh-credential']) {
               sh """
-              scp -o StrictHostKeyChecking=no ./target/${env.JOB_NAME}.jar ec2-user@3.38.221.36:~/workspace/${env.JOB_NAME}.jar
+              scp -o StrictHostKeyChecking=no ./target/${env.JOB_NAME}.jar ec2-user@3.38.221.36:~/workspace/testcicd.jar
               ssh ec2-user@172.31.58.15 -o StrictHostKeyChecking=no
 
               kill -9 $(lsof -t -i:8080)
