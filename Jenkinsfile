@@ -26,8 +26,6 @@ pipeline {
             credentialsId: 'imyujinsim',
             url: 'https://github.com/imyujinsim/testcicd.git'
 
-            sh "ls -la"
-
             print('github is succesfully connected!')
           }
           catch (error) {
