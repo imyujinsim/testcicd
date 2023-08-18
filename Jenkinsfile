@@ -36,7 +36,7 @@ pipeline {
             ./mvnw package -Dskip-test
             cp ./target/*.jar ./target/${ECR_IMAGE}.jar
             """
-            env.mavenBuildResult=true
+
           } catch(error) {
             print('error')
             sh "rm -rf /var/lib/jenkins/workspace/*"
