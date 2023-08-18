@@ -51,13 +51,14 @@ pipeline {
           try {
             sshagent(credentials: ['ssh-credential']) {
               sh """
-              scp -P 22 ./target/${env.JOB_NAME}.jar ec2-user@172.31.58.15:/home/ec2-user/${env.JOB_NAME}.jar
+              scp -P 22 /var/lib/jenkins/workspace/${env.JOB_NAME}/target/${env.JOB_NAME}.jar ec2-user@172.31.58.15:/home/ec2-user/${env.JOB_NAME}.jar
               ssh ec2-user@172.31.58.15 -o StrictHostKeyChecking=no
 
               mkdir ${env.JOB_NAME}
               cd ${env.JOB_NAME}
+              mv /home/ec2-user/${env.JOB_NAME}.jar .
 
-              java -jar ${env.JOB_NAME}.jar 
+              java -jar ${env.JOB_NAME}.jar &
               """
             }
           } catch(error) {
