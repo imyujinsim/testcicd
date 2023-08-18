@@ -54,8 +54,8 @@ pipeline {
               scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/${env.JOB_NAME}/target/${env.JOB_NAME}.jar ec2-user@3.38.221.36:/home/ec2-user/${env.JOB_NAME}.jar
               ssh ec2-user@172.31.58.15 -o StrictHostKeyChecking=no
 
-              mkdir ${env.JOB_NAME}
-              cd ${env.JOB_NAME}
+              mkdir workspace
+              cd workspace
               mv /home/ec2-user/${env.JOB_NAME}.jar .
 
               java -jar ${env.JOB_NAME}.jar &
@@ -63,7 +63,7 @@ pipeline {
             }
           } catch(error) {
             print('error')
-            sh "rm -rf /var/lib/jenkins/workspace/*"
+            sh "rm -rf /home/ec2-user/workspace/*"
           }
         }
       }
@@ -71,6 +71,7 @@ pipeline {
 
     stage('Finish') {
       steps {
+        sh "exit"
         sh "rm -rf /var/lib/jenkins/workspace/*"
       }
     }
