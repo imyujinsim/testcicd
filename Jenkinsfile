@@ -58,11 +58,10 @@ pipeline {
               sh '''
               #!/bin/bash 
               kill -9 $(lsof -t -i:8080)
+              cd /home/ec2-user/workspace
               '''
 
               sh """
-              cd /home/ec2-user/workspace
-
               java -jar ${env.JOB_NAME}.jar &
               """
             }
