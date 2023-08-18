@@ -34,7 +34,7 @@ pipeline {
           try {
             sh """
             ./mvnw package -Dskip-test
-            cp ./target/*.jar ./target/${ECR_IMAGE}.jar
+            cp ./target/*.jar ./target/${env.JOB_NAME}.jar
             """
 
           } catch(error) {
@@ -54,7 +54,7 @@ pipeline {
               scp -P 22 ./target/${ECR_IMAGE}.jar ec2-user@172.31.58.15:/home/ec2-user/${ECR_IMAGE}.jar
               ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
 
-              ./mvnw package -Dskip-test             
+              java -jar ${env.JOB_NAME}.jar 
                     '''
             }
           } catch(error) {
