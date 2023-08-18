@@ -5,14 +5,6 @@ pipeline {
     maven "maven"
   }
 
-  environment {
-    gitCredential = credentials('githubcd')
-    ECR_PATH = '005040503934.dkr.ecr.ap-northeast-2.amazonaws.com'
-    ECR_IMAGE = 'testcicd'
-    REGION = 'ap-northeast-2'
-    ACCOUNT_ID='005040503934'
-  }
-
   stages {
     stage('Git Clone from gitSCM') {
       steps {
