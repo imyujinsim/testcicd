@@ -50,12 +50,12 @@ pipeline {
         script {
           try {
             sshagent(credentials: ['ssh-credential']) {
-              sh '''
-              scp -P 22 ./target/${ECR_IMAGE}.jar ec2-user@172.31.58.15:/home/ec2-user/${ECR_IMAGE}.jar
+              sh """
+              scp -P 22 ./target/${env.JOB_NAME}.jar ec2-user@172.31.58.15:/home/ec2-user/${env.JOB_NAME}.jar
               ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
 
               java -jar ${env.JOB_NAME}.jar 
-                    '''
+              """
             }
           } catch(error) {
             print('error')
