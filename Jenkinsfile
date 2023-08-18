@@ -52,7 +52,7 @@ pipeline {
           try {
             sshagent(credentials: ['ssh-credential']) {
               sh """
-              scp -o StrictHostKeyChecking=no ./target/${env.JOB_NAME}.jar ec2-user@3.38.221.36:~/workspace/${env.JOB_NAME}.jar
+              scp -o StrictHostKeyChecking=no ./target/${env.JOB_NAME}.jar ec2-user@3.38.221.36:~/${env.JOB_NAME}.jar
               ssh ec2-user@172.31.58.15 -o StrictHostKeyChecking=no
               """
 
@@ -62,12 +62,12 @@ pipeline {
               '''
 
               sh """
-              java -jar /home/ec2-user/workspace/${env.JOB_NAME}.jar %
+              java -jar ${env.JOB_NAME}.jar %
               """
             }
           } catch(error) {
             print('error')
-            sh "rm -rf /home/ec2-user/workspace/*"
+            sh "rm -rf /home/ec2-user/*.jar"
           }
         }
       }
@@ -75,6 +75,7 @@ pipeline {
 
     stage('Finish') {
       steps {
+        sh "rm -rf /home/ec2-user/*.jar"
         sh "exit"
         sh "rm -rf /var/lib/jenkins/workspace/*"
       }
