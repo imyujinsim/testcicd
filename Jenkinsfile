@@ -56,21 +56,23 @@ pipeline {
     }
 
     stage('Deploy with ssh') {
-        steps {
-            try {
-                sshagent(credentials: ['ssh-credential']) {
-                    sh '''
-                    scp -P 22 ./target/${ECR_IMAGE}.jar ec2-user@172.31.58.15:/home/ec2-user/${ECR_IMAGE}.jar
-                    ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
+      steps {
+        script {
+          try {
+            sshagent(credentials: ['ssh-credential']) {
+              sh '''
+              scp -P 22 ./target/${ECR_IMAGE}.jar ec2-user@172.31.58.15:/home/ec2-user/${ECR_IMAGE}.jar
+              ssh -o StrictHostKeyChecking=no ${TARGET_HOST} "pwd"
 
-                    ./mvnw package -Dskip-test             
+              ./mvnw package -Dskip-test             
                     '''
-                }
-            } catch(error) {
-                print('error')
-                sh "rm -rf /var/lib/jenkins/workspace/*"
             }
+          } catch(error) {
+            print('error')
+            sh "rm -rf /var/lib/jenkins/workspace/*"
+          }
         }
+      }
     }
 
     stage('Finish') {
